@@ -1,6 +1,6 @@
 #include <Adafruit_CircuitPlayground.h>
 #include <Arduino.h>
-
+// declare all variables and values
 const int LEVEL_DURATION = 15000;
 const int INITIAL_FALL_DELAY = 1000;
 const int LEVEL_DELAY_DECREMENT = 100;
@@ -27,6 +27,7 @@ unsigned long lastFallTime = 0;
 unsigned long fallDelay = INITIAL_FALL_DELAY;
 bool gameStarted = false;
 
+// set up pins and interrupts
 void setup() {
   CircuitPlayground.begin();
   pinMode(LEFT_BUTTON_PIN, INPUT_PULLUP);
@@ -107,7 +108,7 @@ void startGame() {
 void handleButtonPress() {
   if (gameStarted) {
     unsigned long currentTime = millis();
-
+// left button hit
     if (CircuitPlayground.leftButton()) {
       CircuitPlayground.setPixelColor(LEFT_LED_PIN, HIT_COLOR);
       CURRENT_LEFT_COLOR = HIT_COLOR;
@@ -121,7 +122,7 @@ void handleButtonPress() {
         startGame();
       }
     }
-
+// right button hit
     if (CircuitPlayground.rightButton()) {
       CircuitPlayground.setPixelColor(RIGHT_LED_PIN, HIT_COLOR);
       CURRENT_RIGHT_COLOR = HIT_COLOR;
@@ -137,6 +138,7 @@ void handleButtonPress() {
     }
   } else {
     if (CircuitPlayground.leftButton() && CircuitPlayground.rightButton()) {
+      // add restart feature
       startGame();
     }
   }
